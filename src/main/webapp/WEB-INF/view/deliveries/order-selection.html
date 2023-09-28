@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Order selection</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" th:href="@{/}">Main</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
+<div class="container">
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Order date</th>
+      <th>Order time</th>
+      <th>Goods' name</th>
+      <th>Amount</th>
+      <th>Client</th>
+      <th>Client's telephone</th>
+      <th>Order confirmation</th>
+      <th>Online store</th>
+    </tr>
+    </thead>
+    <tbody>
+    <div th:each="o : ${list}">
+      <form>
+        <tr>
+          <td th:text="${o.orderDate}"></td>
+          <td th:text="${o.orderTime}"></td>
+          <td th:text="${o.goodsName}"></td>
+          <td th:text="${o.amount}"></td>
+          <td th:text="${o.clientFullName}"></td>
+          <td th:text="${o.telephone}"></td>
+          <td th:text="${o.orderConfirmation}"></td>
+          <td th:text="${o.onlineStore}"></td>
+          <td hidden="hidden">
+            <input name="selectedOrderId" th:value="${o.id}">
+            <input name="oldOrderId" th:value="${oldOrderId}">
+          </td>
+          <td>
+            <input type="hidden" th:field="${deliveryDto.id}">
+            <input type="hidden" th:field="${deliveryDto.deliveryDate}">
+            <input type="hidden" th:field="${deliveryDto.deliveryTime}">
+            <input type="hidden" th:field="${deliveryDto.address}">
+            <input type="hidden" th:field="${deliveryDto.courierFullName}">
+            <input type="hidden" th:field="${deliveryDto.deliveryCost}">
+            <input type="hidden" th:field="${deliveryDto.orderId}">
+            <input type="hidden" name="method" th:value="${method}">
+            <button class="btn btn-primary" th:formaction="@{/deliveries/{id}/order (id=${deliveryId})}" formmethod="post">Select</button>
+          </td>
+        </tr>
+      </form>
+    </div>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

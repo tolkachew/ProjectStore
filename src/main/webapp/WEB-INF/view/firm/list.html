@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title class="container">List of firms</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" th:href="@{/}">Main</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Firm's name</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <div th:each="entry : ${firms.entrySet()}">
+            <form>
+                <tr>
+                    <td class="content" th:text="${entry.value}"></td>
+                    <td>
+                        <button class="btn btn-primary" th:formaction="@{/firms/{id} (id=${entry.key})}" formmethod="get">Edit</button>
+                    </td>
+                </tr>
+            </form>
+        </div>
+    </table>
+    <br>
+    <div>
+        <form action="/firms/creation" method="get">
+            <button class="btn btn-success">Add new firm</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

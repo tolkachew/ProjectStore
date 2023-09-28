@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title class="container">Edit delivery</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" th:href="@{/}">Main</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+<div class="container">
+    <form th:action="${action}" th:method="${method}">
+        <div class="form-group">
+            <label for="deliveryDate">Delivery date</label>
+            <input type="date" class="form-control" id="deliveryDate" th:field="*{deliveryDto.deliveryDate}" required/>
+        </div>
+        <div class="form-group">
+            <label for="deliveryTime">Delivery time</label>
+            <input type="time" class="form-control" id="deliveryTime" th:field="*{deliveryDto.deliveryTime}" required/>
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" id="address" th:field="*{deliveryDto.address}" required/>
+        </div>
+        <div class="form-group">
+            <label for="courierFullName">Courier</label>
+            <input type="text" class="form-control" id="courierFullName" th:field="*{deliveryDto.courierFullName}" required/>
+        </div>
+        <div class="form-group">
+            <label for="deliveryCost">Delivery cost</label>
+            <input type="text" class="form-control" id="deliveryCost" th:field="*{deliveryDto.deliveryCost}" pattern="(\d+([\.,]\d{1,2})?)?" required/>
+        </div>
+        <input type="hidden" th:field="${deliveryDto.id}">
+
+        <table class="table">
+            <tr>
+                <td>Online store:</td>
+                <td th:text="${orderDto.onlineStore}"></td>
+            </tr>
+            <tr>
+                <td>Goods:</td>
+                <td th:text="${orderDto.goodsName}"></td>
+            </tr>
+            <tr>
+                <td>Order date:</td>
+                <td th:text="${orderDto.orderDate}"></td>
+            </tr>
+            <tr>
+                <td>Amount:</td>
+                <td th:text="${orderDto.amount}"></td>
+            </tr>
+            <tr>
+                <td>Client:</td>
+                <td th:text="${orderDto.clientFullName}"></td>
+            </tr>
+            <tr>
+                <td>Client's telephone:</td>
+                <td th:text="${orderDto.telephone}"></td>
+            </tr>
+            <tr>
+                <td>Order confirmed:</td>
+                <td th:text="${orderDto.orderConfirmation}"></td>
+            </tr>
+        </table>
+
+        <div th:if="${errorMessage} != null" class="alert alert-danger">
+            <label th:text="${errorMessage}" style="color:red"></label>
+        </div>
+
+        <input type="hidden" th:field="${deliveryDto.id}">
+        <input type="hidden" name="orderId" th:value="${orderDto.id}">
+        <input type="hidden" name="method" th:value="${method}">
+        <button class="btn btn-primary" th:formaction="@{/deliveries/orders}" formmethod="get">Select order</button>
+        <button class="btn btn-success">Save</button>
+    </form>
+
+    <form th:if="${deliveryDto.id} != 0" th:action="@{/deliveries/{id}/completion (id=${deliveryDto.id})}" th:method="post">
+        <button class="btn btn-warning">Delivery completed</button>
+    </form>
+
+    <form th:if="${deliveryDto.id} != 0" th:action="@{/deliveries/{id} (id=${deliveryDto.id})}" th:method="delete">
+        <button class="btn btn-danger">Delete</button>
+    </form>
+</div>
+</body>
+</html>

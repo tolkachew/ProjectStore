@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Goods selection</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" th:href="@{/}">Main</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+<div class="container">
+<form>
+    <input type="hidden" th:field="*{orderDto.id}">
+    <!--<input type="hidden" th:field="*{orderDto.goodsId}">-->
+    <!--<input type="hidden" th:field="*{orderDto.storeId}">-->
+    <input type="hidden" th:field="*{orderDto.orderDate}">
+    <input type="hidden" th:field="*{orderDto.orderTime}">
+    <input type="hidden" th:field="*{orderDto.amount}">
+    <input type="hidden" th:field="*{orderDto.clientFullName}">
+    <input type="hidden" th:field="*{orderDto.telephone}">
+    <input type="hidden" th:field="*{orderDto.orderConfirmation}">
+
+
+        <div th:each="entry : ${map.entrySet()}" class="mt-4">
+            <div class="mb-3">Internet Address:
+                <span class="text-primary" th:text="*{entry.getKey().internetAddress}"></span>
+            </div>
+            <div class="mb-3">Is delivery paid:
+                <span class="text-success" th:text="*{entry.getKey().deliveryPaid}"></span>
+            </div>
+
+        <table class="table table-bordered">
+            <tr>
+                <td>Name</td>
+                <td>Firm's name</td>
+                <td>Model</td>
+                <td>Cost</td>
+                <td>Guarantee (days)</td>
+            </tr>
+            <div th:each="g : ${entry.getValue()}">
+                <tr>
+                    <td th:text="${g.name}"></td>
+                    <td th:text="${g.firmName}" ></td>
+                    <td th:text="${g.model}" ></td>
+                    <td th:text="${g.cost}" ></td>
+                    <td th:text="${g.guarantee}" ></td>
+                    <td >
+                        <button class="btn btn-primary" th:formaction="@{/orders/stores/{storeId}/goods/{goodsId}(storeId=${entry.getKey().getId().longValue()},goodsId=${g.getId().longValue()})}"
+                                formmethod="get" >select</button>
+                    </td>
+                </tr>
+            </div>
+        </table>
+    </div>
+</form>
+    </div>
+</body>
+</html>

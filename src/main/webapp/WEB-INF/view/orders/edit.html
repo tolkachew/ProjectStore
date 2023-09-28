@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" th:href="@{/}">Main</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+<div class="container">
+    <form th:action="@{/orders/{result} (result = ${orderDto.id} == 0 ? 'creation' : ${orderDto.id})}"
+          th:method="${orderDto.id} == 0 ? 'post' : 'patch'">
+        <input type="hidden" th:field="*{orderDto.id}">
+        <input type="hidden" th:field="*{orderDto.goodsId}">
+        <input type="hidden" th:field="*{orderDto.storeId}">
+        <div class="form-group">
+            <label for="orderDate">Order date:</label>
+            <input type="date" class="form-control" id="orderDate" th:field="*{orderDto.orderDate}" disabled/>
+        </div>
+        <div class="form-group">
+            <label for="orderTime">Order time:</label>
+            <input type="time" class="form-control" id="orderTime" th:field="*{orderDto.orderTime}" disabled/>
+        </div>
+        <div class="form-group">
+            <label for="amount">Amount:</label>
+            <input type="number" class="form-control" id="amount" th:field="*{orderDto.amount}" required pattern="[1-9]{1}\d*"/>
+        </div>
+        <div class="form-group">
+            <label for="clientFullName">Client:</label>
+            <input type="text" class="form-control" id="clientFullName" th:field="*{orderDto.clientFullName}" required/>
+        </div>
+        <div class="form-group">
+            <label for="telephone">Client's telephone:</label>
+            <input type="tel" class="form-control" id="telephone" th:field="*{orderDto.telephone}" required pattern="\+\d{12}"/>
+        </div>
+        <div class="form-group">
+            <label for="orderConfirmation">Order confirmation:</label>
+            <select class="form-control" id="orderConfirmation" th:field="*{orderDto.orderConfirmation}">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+
+        <div>
+            <div>Online store:</div>
+            <table class="table">
+                <tr>
+                    <td>Address:</td>
+                    <td th:text="${onlineStoreDto.internetAddress}"></td>
+                </tr>
+                <tr>
+                    <td>Is delivery paid:</td>
+                    <td th:text="${onlineStoreDto.deliveryPaid}"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div>
+            <div>Goods:</div>
+            <table class="table">
+                <tr>
+                    <td>Name:</td>
+                    <td th:text="${goodsDto.name}"></td>
+                </tr>
+                <tr>
+                    <td>Firm's name:</td>
+                    <td th:text="${goodsDto.firmName}"></td>
+                </tr>
+                <tr>
+                    <td>Model:</td>
+                    <td th:text="${goodsDto.model}"></td>
+                </tr>
+                <tr>
+                    <td>Cost:</td>
+                    <td th:text="${goodsDto.cost}"></td>
+                </tr>
+                <tr>
+                    <td>Guarantee (days):</td>
+                    <td th:text="${goodsDto.guarantee}"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div>
+            <button class="btn btn-primary" formaction="/orders/stores_goods" formmethod="get">Select Goods</button>
+        </div>
+
+        <div th:if="${errorMessage} != null" class="alert alert-danger">
+            <label th:text="${errorMessage}" style="color:red"></label>
+        </div>
+
+        <button class="btn btn-success">Save</button>
+    </form>
+
+    <form th:if="${orderDto.id} != 0" th:action="@{/orders/{id} (id=${orderDto.id})}" th:method="delete">
+        <button class="btn btn-danger">Delete</button>
+    </form>
+</div>
+</body>
+</html>

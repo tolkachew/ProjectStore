@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title class="container">Deliveries</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" th:href="@{/}">Main</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+<div class="container">
+    <form action="/deliveries/creation" method="get">
+        <button class="btn btn-success">Create</button>
+    </form>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Delivery date</th>
+            <th>Delivery time</th>
+            <th>Address</th>
+            <th>Courier</th>
+            <th>Delivery cost</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <div th:each="d : ${list}">
+            <form>
+                <tr>
+                    <td th:text="${d.deliveryDate}"></td>
+                    <td th:text="${d.deliveryTime}"></td>
+                    <td th:text="${d.address}"></td>
+                    <td th:text="${d.courierFullName}"></td>
+                    <td th:text="${d.deliveryCost}"></td>
+                    <td>
+                        <button class="btn btn-primary" th:formaction="@{/deliveries/{id} (id=${d.id})}" formmethod="get">Edit</button>
+                    </td>
+                </tr>
+            </form>
+        </div>
+    </table>
+</div>
+</body>
+</html>

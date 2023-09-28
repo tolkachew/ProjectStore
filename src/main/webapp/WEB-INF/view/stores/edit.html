@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title class="container">Online Stores</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" th:href="@{/}">Main</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
+<div class="container">
+  <form class="form" th:action="@{/stores/{action} (action = ${storeDto.id} == null ? 'creation' : ${storeDto.id})}"
+        th:method="${storeDto.id} == null ? 'post' : 'patch'">
+    <p class="form-group">Internet Address: <input type="text" class="form-control" th:field="*{storeDto.internetAddress}" required/></p>
+
+    <p class="form-group">Is delivery paid?
+      <select class="form-control" th:field="*{storeDto.deliveryPaid}">
+        <option value="Yes" th:text="Yes"></option>
+        <option value="No" th:text="No"></option>
+      </select>
+    </p>
+
+    <input type="hidden" class="form-control" th:field="*{storeDto.id}"/>
+
+    <button class="btn btn-primary">Save</button>
+    <input type="reset" class="btn btn-secondary" value="Reset" />
+    <br>
+    <br>
+    <div th:if="${storeDto.id} != null">
+      <button class="btn btn-primary" th:formaction="@{/stores/{id}/goods (id=${storeDto.id})}" th:formmethod="get">Add goods to this store</button>
+    </div>
+
+    <div th:if="${storeDto.id} == null">
+      <button class="btn btn-primary" th:formaction="@{/stores/selecting/goods}" th:formmethod="get">Add goods to this store</button>
+    </div>
+  </form>
+
+  <div>Goods of this online store:</div>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Firm's name</th>
+      <th>Model</th>
+      <th>Cost</th>
+      <th>Guarantee (days)</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+
+    <div th:each="g : ${list}">
+      <form class="form" th:action="@{/stores/{storeId}/goods/{goodsId} (storeId=${storeDto.id},goodsId=${g.id})}"
+            th:method="delete">
+        <input type="hidden" class="form-control" th:field="*{storeDto.id}"/>
+        <input type="hidden" class="form-control" th:field="*{storeDto.internetAddress}"/>
+        <input type="hidden" class="form-control" th:field="*{storeDto.deliveryPaid}"/>
+        <tr>
+          <td th:text="${g.name}"></td>
+          <td th:text="${g.firmName}" ></td>
+          <td th:text="${g.model}" ></td>
+          <td th:text="${g.cost}" ></td>
+          <td th:text="${g.guarantee}" ></td>
+          <td>
+            <button class="btn btn-danger">Remove</button>
+          </td>
+        </tr>
+      </form>
+    </div>
+  </table>
+
+  <form class="form" th:if="${storeDto.id} != null" th:action="@{/stores/{id} (id=${storeDto.id})}"  th:method="delete">
+    <button class="btn btn-warning">Delete</button>
+  </form>
+</div>
+</body>
+</html>

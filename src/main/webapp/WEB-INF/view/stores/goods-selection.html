@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Goods selection</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" th:href="@{/}">Main</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Firm's name</th>
+            <th>Model</th>
+            <th>Cost</th>
+            <th>Guarantee (days)</th>
+        </tr>
+        </thead>
+        <form>
+            <input type="hidden" th:field="*{storeDto.internetAddress}"/>
+            <input type="hidden" th:field="*{storeDto.deliveryPaid}"/>
+            <input type="hidden" th:field="*{storeDto.id}"/>
+            <tbody>
+            <div th:each="g : ${goodsList}">
+                <tr>
+                    <td>
+                        <button class="btn btn-primary" th:formmethod="post" th:formaction="@{/stores/{storeId}/goods/{goodsId} (storeId=${storeDto.id} == null ? 0 : ${storeDto.id},goodsId=${g.id})}">Add</button>
+                    </td>
+                    <td th:text="${g.name}"></td>
+                    <td th:text="${g.firmName}" ></td>
+                    <td th:text="${g.model}" ></td>
+                    <td th:text="${g.cost}" ></td>
+                    <td th:text="${g.guarantee}" ></td>
+                </tr>
+            </div>
+            </tbody>
+        </form>
+    </table>
+</div>
+</body>
+</html>

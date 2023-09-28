@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Stores selection</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" th:href="@{/}">Main</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
+<div class="container">
+  <table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th>Internet Address</th>
+      <th>Is delivery paid?</th>
+      <th></th>
+    </tr>
+    </thead>
+    <form>
+      <input type="hidden" th:field="*{orderDto.id}">
+      <input type="hidden" th:field="*{orderDto.goodsId}">
+      <input type="hidden" th:field="*{orderDto.storeId}">
+      <input type="hidden" th:field="*{orderDto.orderDate}">
+      <input type="hidden" th:field="*{orderDto.orderTime}">
+      <input type="hidden" th:field="*{orderDto.amount}">
+      <input type="hidden" th:field="*{orderDto.clientFullName}">
+      <input type="hidden" th:field="*{orderDto.telephone}">
+      <input type="hidden" th:field="*{orderDto.orderConfirmation}">
+      <div th:each="s : ${list}">
+        <tr>
+          <td th:text="${s.internetAddress}"></td>
+          <td th:text="${s.deliveryPaid}" ></td>
+          <td>
+            <button class="btn btn-primary" th:formaction="@{/orders/stores/{id} (id=${s.id})}" formmethod="get">Select</button>
+          </td>
+        </tr>
+      </div>
+    </form>
+  </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title class="container">Goods</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" th:href="@{/}">Main</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+<div class="container">
+    <h1>Filter</h1>
+    <form class="form" action="#" th:action="@{/goods/filter}" th:method="get">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" th:field="*{goodsFilterDto.name}" />
+        </div>
+        <div class="form-group">
+            <label for="firmName">Firm's Name:</label>
+            <input type="text" class="form-control" th:field="*{goodsFilterDto.firmName}" />
+        </div>
+        <div class="form-group">
+            <label for="model">Model:</label>
+            <input type="text" class="form-control" th:field="*{goodsFilterDto.model}" />
+        </div>
+        <div class="form-group">
+            <label for="costFrom">Cost from:</label>
+            <input type="text" class="form-control" th:field="*{goodsFilterDto.costFrom}" pattern="(\d+([\.,]\d{1,2})?)?" />
+        </div>
+        <div class="form-group">
+            <label for="costTo">To:</label>
+            <input type="text" class="form-control" th:field="*{goodsFilterDto.costTo}" pattern="(\d+([\.,]\d{1,2})?)?" />
+        </div>
+        <div class="form-group">
+            <label for="guaranteeFrom">Guarantee from:</label>
+            <input type="text" class="form-control" th:field="*{goodsFilterDto.guaranteeFrom}" pattern="\d*" />
+        </div>
+        <div class="form-group">
+            <label for="guaranteeTo">To:</label>
+            <input type="text" class="form-control" th:field="*{goodsFilterDto.guaranteeTo}" pattern="\d*" />
+        </div>
+        <div class="form-group">
+            <label for="pageSize">Page size:</label>
+            <input type="text" class="form-control" th:field="*{goodsFilterDto.pageSize}" pattern="\d*" />
+        </div>
+        <div class="form-group">
+            <label for="pageNum">Page number:</label>
+            <input type="text" class="form-control" th:field="*{goodsFilterDto.pageNum}" pattern="\d*" />
+        </div>
+        <div class="form-group">
+            <label for="sortBy">Choose sorting:</label>
+            <select class="form-control" th:field="*{goodsFilterDto.sortBy}">
+                <option th:each="type : ${sortingList}" th:value="${type}" th:text="${type}"></option>
+            </select>
+        </div>
+        <button class="btn btn-primary">Show</button>
+        <input type="reset" class="btn btn-secondary" value="Reset" />
+        <button class="btn btn-success" formaction="/goods/creation" formmethod="get">Create</button>
+    </form>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Firm's name</th>
+            <th>Model</th>
+            <th>Cost</th>
+            <th>Guarantee (days)</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <form>
+            <div th:each="g : ${list}">
+                <tr>
+                    <td th:text="${g.name}"></td>
+                    <td th:text="${g.firmName}" ></td>
+                    <td th:text="${g.model}" ></td>
+                    <td th:text="${g.cost}" ></td>
+                    <td th:text="${g.guarantee}" ></td>
+                    <td>
+                        <button class="btn btn-warning" th:formaction="@{/goods/{id} (id=${g.id})}" formmethod="get" >Edit</button>
+                    </td>
+                </tr>
+            </div>
+        </form>
+    </table>
+</div>
+</body>
+</html>

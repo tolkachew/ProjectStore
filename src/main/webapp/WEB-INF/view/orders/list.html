@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Orders</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" th:href="@{/}">Main</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
+<div class="container">
+  <form action="/orders/creation" method="get">
+    <button class="btn btn-primary">Create</button>
+  </form>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Order date</th>
+      <th>Order time</th>
+      <th>Goods' name</th>
+      <th>Online store</th>
+      <th>Amount</th>
+      <th>Client</th>
+      <th>Client's telephone</th>
+      <th>Order confirmation</th>
+      <th>Edit</th>
+    </tr>
+    </thead>
+    <tbody>
+    <div th:each="o : ${list}">
+      <form>
+        <tr>
+          <td th:text="${o.orderDate}"></td>
+          <td th:text="${o.orderTime}"></td>
+          <td th:text="${o.goodsName}"></td>
+          <td th:text="${o.onlineStore}"></td>
+          <td th:text="${o.amount}"></td>
+          <td th:text="${o.clientFullName}"></td>
+          <td th:text="${o.telephone}"></td>
+          <td th:text="${o.orderConfirmation}"></td>
+          <td>
+            <button class="btn btn-warning" th:formaction="@{/orders/{id} (id=${o.id})}" formmethod="get">Edit</button>
+          </td>
+        </tr>
+      </form>
+    </div>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

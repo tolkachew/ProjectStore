@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title class="container">Edit firm</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" th:href="@{/}">Main</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+<div class="container">
+    <form th:action="@{/firms}" th:method="put">
+        <input id="id" name="id" th:value="${id}" type="hidden">
+
+        <div class="form-group">
+            <label for="name">Firm's name</label>
+            <input type="text" class="form-control" id="name" name="name" th:value="${name}" required>
+        </div>
+
+        <div th:if="${errorMessage != null}" class="alert alert-danger">
+            <label th:text="${errorMessage}" style="color:red"></label>
+        </div>
+
+        <button class="btn btn-primary">Save</button>
+    </form>
+    <br>
+    <br>
+
+    <form th:action="@{/firms/{id}?name={name} (id=${id}, name=${name})}" th:method="delete">
+        <button class="btn btn-danger">Delete</button>
+    </form>
+</div>
+</body>
+</html>

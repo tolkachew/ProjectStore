@@ -1,0 +1,48 @@
+.jumbotron {
+    background-color: rgba(248, 249, 250, 0.7);
+    padding: 20px;
+    text-align: center;
+}
+
+.jumbotron h1 {
+    font-weight: bold;
+}
+
+.btn-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn-container form {
+    margin: 10px;
+}
+
+.btn-custom {
+    background-color: #FF5733;
+    color: white;
+    font-size: 24px;
+    padding: 20px 30px;
+    border: none;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+}
+
+.btn-custom:hover {
+    background-color: #FF4500;
+}
+
+body {
+    background-image: url('images/1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+    height: 100vh;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+}
